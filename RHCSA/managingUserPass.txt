@@ -1,0 +1,37 @@
+To Lock the user account :
+	sudo usermod -L operator1(or whatever the username is)
+
+To Unlock the user account: 
+	sudo usermod -U operator1(or whatever the fuck the username is)
+
+PassWord policy management:
+	chage command is used with some external flags!! 
+		chage -m(min days) -M(max days) -W(Warn days)  -I(inactive days) -d(lastchange)
+
+	To check details for the pass aging details for a specific user , let's say user3:
+		chage -l user3
+	To force user to change it's password
+		chage -d 0 user3 //Set's the last pass change date to 0
+	To set the pass to expire the pass from currDate upto some days ahead in future 
+		use the date command to get the date first 
+			date -d "180 days" +%F
+				Will give you date , ex -> 2026-08-20
+
+		Use this date to chage command with the -E flag
+			chage -E 2026-08-20 user3
+
+	Task: 
+		First to check pass policies of all users to 30 days
+			go to the /etc/login.defs file , change the PASS_MAX property to 30 
+		create a new group consultants with gid 35000
+			sudo groupadd -g 35000 consultants
+		Configure there administrative rights , to execute commands as any user 
+			-> Create a file /etc/sudoers.d/consultants(or any group name) 
+				-> %consultants ALL=(ALL) ALL
+					% sign indicates a group not a user !!
+		
+		To add the user to the group 
+			sudo usermod -aG consultants(any group name) consultant1,2,3....
+
+		
+
