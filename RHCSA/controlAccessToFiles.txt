@@ -1,0 +1,71 @@
+Let's gooo new task! New learning 
+
+	
+	File permissions control's access to a file 
+	
+	File have three user's category
+		1.)User who created that file
+		2.)A single group/primary group who own that file
+		3.)All other users
+	User permissions override group permissions, which override other permissions.
+
+	Effects of permissions on files and directories 
+		r(read) 
+		w(write)
+		x(execute)
+
+	A file can be removed by anyone who has ownership of or write permission to the directory in which the file resides regardless of the ownership of
+	the file or permissions on file itself 
+
+	This can be overridden with a special permission -> sticky bit 
+
+	Permissions on directory can block access to the file inside that directory
+	NOTE-> If write and sticky bit , both are set to a directory , then only the one with the ownership of that file can delete it. 
+
+	In permission -> first column specifies the user's permission's that created that file , second : the group , third: other's 
+
+	Symbolic method for changing group permissions -> u : users , g : groups , o : other's , a : all
+	Use + or - to add or remove permissions
+
+	Suppose the command : chmod -R  g+rwX lucifer 
+		chmod -> command used to change directory permissions  , -R : recursively add permission not just only to directory but to also the files
+		inside it. 
+		g -> set's for group , + -> add permissions , r w : read and write 
+		special NOTE -> X is not same as x , it is a special execute permission that would only execute if the files are already executable or
+		item is a directory!!
+			This prevents , normal files from accidentaly becoming executable 
+	
+	To remove the  group and other r&w permissions 
+		chmod g0-rw filename
+	To add executable for everyone on the file 
+		chmod a+x filename 
+	
+	chmod @@@ file|directory 
+		each @ represents a digit for permissions 
+	4 -> read 
+	2 -> write
+	1 -> execute 
+
+	3digits basically , but can be 4 digits for advanced permissions 
+	Each perm start's with 0 , for read add 4 , for write add 2 , for execute add 1 , Total:7
+	
+	Ex -> 754 : it basically means : all perm for user , r%w for groups , read for other's 
+	
+	Only root can change the user than owns a file 
+	
+	File ownership can be changed with the help of the "CHOWN" command 
+		ex -> chown student file_1 , give's the student the ownership of file_1
+	To change the ownership of an entire directory tree 
+		chown -R(the recursive flag) student test_dir 
+	To change the group ownership , just add a colon(:) before the group name 
+		chown :admins test_dir \
+	To change both owner's and group , 
+		chown  visitor:admins test_dir , where the visitor is the user and admins is the group 
+	Another command can be used to change group ownership 
+		chgrp , it's just that the colon is not needed , nothing else!! the colon was cool btw..
+
+	NOTE -> Diff in su user and su - user
+	su user : Current environment will be the same
+	su - user : user environment will be configured , like a fresh login from user itself!!!
+	
+	

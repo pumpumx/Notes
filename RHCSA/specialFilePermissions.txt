@@ -1,0 +1,23 @@
+
+
+	Let's learn about special file permissions and how to handle default file permissions 
+	
+	Special Permissions : 
+		Constitues a fourth permission!!
+	1.) suid -> u+s : The file is executed as the user who created the file , not the user who ran the file , OnDir -> No effect 
+	2.) sgid -> g+s : The file is executed as the group who created the file , not the user who ran the file, On Dir -> Files newly created in that dir , are set to be owned by the owner who created that directory
+	2.) sticky -> o+t : No effect on user , OnDir -> User's with write access to that directory can only remove files that they own in that directory not the files that other users own!!!!
+	
+
+	Numerically Fourth Preceding digit -> setuid = 4 , setgid = 2 , sticky = 1;
+
+	To set the gid  with rwx for user and group but no access for other's 
+
+	chmod 2770 directory
+	
+	The default dir permission is 0777 for directories assigned by the operating systems , For files it is 0666 rw-rw-rw !
+	
+	Umask is used to define the default permission set by the operating system when a user login's , ex 022 means the write bit is cleared for the groups and other user's 	, 
+	a umask of 077 clears the rwx for group and other's 
+	
+	use umask command to get the value of current session umask.
