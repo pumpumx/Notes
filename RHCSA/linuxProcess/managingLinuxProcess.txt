@@ -1,3 +1,64 @@
 
 
 	Let's goo starting with linux processes
+
+	Process is a running instance of a launched , executable program 
+		Process consists of: 
+			1. A addresss space of allocated memory	2. Security properties including owner's credentials and privileges 3. One or more execution thread of a program	
+			4. Process State
+	
+	Environment of process include: Local and global variables
+		A current scheduling context 
+		Allocated system resources , such as file descriptors and network ports
+	
+	IMP: A parent process duplicate it's own address space (FORK) to create a (CHILD) process structure. 
+	Every new process is allocated a unique process id for tracking and security.
+	The pid and ppid(parent process id) are part of the new environment. 
+	Any process may create a child process.
+	
+	IMP -> all process are descendants of first parent process , for example in arch/RED-HAT :  systemd
+	
+	Normally , a parent process sleep's while a child process is running 
+	
+	The parent signaled awake , when the child sleeps... 
+		Clean's the process table of the child entry , i.e free's child resources
+	Each CPU or cpu core , work's on a process one point at a time .. 
+
+	Linux process state: 
+		Running : R :Task_Running ->  Means a process is currently running by the CPU.Maybe running user routines , kernel routines(system calls) or (Runnable state) 
+		Sleeping : S : Task_Interruptable -> The process is waiting for some condition , maybe hardware request , system resource access or signal , when an event or signal satisfies the condition , the process returns to running .	
+			D : Task_Uninterruptabe -> The process is sleeping , but unless S , it cannot be disturbed by any signals. Used only when process interruption may cause an unpredictable device change.
+			K : Task killable -> 	Same like D : but the process is modified in such a way , that it responds to the kill signal. Utilites frequently display killable processa as D state.
+
+			I : Task_Report_Idle -> Subset of D : Kernel doesnot count these process when taking load average.Used for kernel thread. 
+							      Accepts fatal signals . Flags set -> Taks
+			
+		Suspend : T : Task_Stopped -> task is stopped by usually a kill signal by a user or another process. 
+						IMP -> The process can be continued by another process to be continued (running) 
+			  T : Task_traced  -> 	A process that is being debugged is also temporary stopped and share's the same T flag.
+		Zombie : Z : Exit_zombie -> a child process signals it's parent process as it exits. All resources exept the pid are released.
+			 X : Exit_Dead -> When the process is release completley | the parent cleans up(reap) the remaining child process structure. 
+					 The State will never be observed in process-listing utilities.
+	
+	Why the fuck process state are even important? 
+		It's important to understand how the kernel communicates with the processes and how process communicate with each other.
+	On a single cpu system only one process can run at a time.. 
+		It;s possible to see alot of processes in the status of R , but the thing is they are not in running state , they are waiting for a signal
+	A PROCESS can be in a SUSPENDED, TERMINATED, SLEEPING ,Interrupted,stopped , resume 	
+
+	Ps command is used to list current processes , It can include : 
+		UserIdentifaction id(UID) , which determines process privilege 
+		Unique process indentification (PID)
+		CPU and real time already expended. 
+		How much memory the process has allocated in various locations.
+		The location of process STDOUT : also known as the controlling terminal .
+		The current process state.
+		
+	Most common options -> ps aux to display all process even those process without the controlling terminal. ps lax (long listint) provides much more technical details.
+	
+	Notes :-> 
+		ps in brackets , at the top are system's processess.
+		Zombies are listed as exiting or defunct
+		The output of ps display as ps , use top to dynamically update process state.
+		
+	
