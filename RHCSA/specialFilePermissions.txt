@@ -21,3 +21,13 @@
 	a umask of 077 clears the rwx for group and other's 
 	
 	use umask command to get the value of current session umask.
+
+	By seting umask value to 0 , the file permissions for others change from read to read and write , the dir permissions for other's change from read and execute to rwx
+
+	To mask all permissions for other's 
+	umask 007 
+	
+	By default umask is 002 or 022 
+	
+	
+	
